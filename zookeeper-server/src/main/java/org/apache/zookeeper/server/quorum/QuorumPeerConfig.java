@@ -282,6 +282,7 @@ public class QuorumPeerConfig {
         for (Entry<Object, Object> entry : zkProp.entrySet()) {
             String key = entry.getKey().toString().trim();
             String value = entry.getValue().toString().trim();
+            value = ConfigTracker.getConfigParamValue(key, value);
             if (key.equals("dataDir")) {
                 dataDir = vff.create(value);
             } else if (key.equals("dataLogDir")) {

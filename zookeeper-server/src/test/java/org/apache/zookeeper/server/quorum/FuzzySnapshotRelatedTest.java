@@ -30,6 +30,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.security.sasl.SaslException;
+
+import edu.illinois.CTestClass;
+import edu.illinois.CTestJunit5Extension;
 import org.apache.jute.OutputArchive;
 import org.apache.zookeeper.AsyncCallback.MultiCallback;
 import org.apache.zookeeper.CreateMode;
@@ -54,12 +57,15 @@ import org.apache.zookeeper.test.ClientBase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Test cases used to catch corner cases due to fuzzy snapshot.
  */
+@ExtendWith(CTestJunit5Extension.class)
+@CTestClass
 public class FuzzySnapshotRelatedTest extends QuorumPeerTestBase {
 
     private static final Logger LOG = LoggerFactory.getLogger(FuzzySnapshotRelatedTest.class);
@@ -219,7 +225,6 @@ public class FuzzySnapshotRelatedTest extends QuorumPeerTestBase {
      */
     @Test
     public void testPZxidUpdatedWhenLoadingSnapshot() throws Exception {
-
         final String parent = "/testPZxidUpdatedDuringTakingSnapshot";
         final String child = parent + "/child";
         createEmptyNode(zk[followerA], parent, CreateMode.PERSISTENT);
