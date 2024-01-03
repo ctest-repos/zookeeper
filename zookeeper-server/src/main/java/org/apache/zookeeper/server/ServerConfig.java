@@ -22,6 +22,8 @@ import java.io.File;
 import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.Properties;
+
+import edu.illinois.ConfigTracker;
 import org.apache.yetus.audience.InterfaceAudience;
 import org.apache.zookeeper.metrics.impl.DefaultMetricsProvider;
 import org.apache.zookeeper.server.quorum.QuorumPeerConfig;
@@ -124,52 +126,67 @@ public class ServerConfig {
     }
 
     public InetSocketAddress getClientPortAddress() {
+        ConfigTracker.markParamAsUsed("clientPortAddress");
         return clientPortAddress;
     }
     public InetSocketAddress getSecureClientPortAddress() {
+        ConfigTracker.markParamAsUsed("secureClientPortAddress");
         return secureClientPortAddress;
     }
     public File getDataDir() {
+        ConfigTracker.markParamAsUsed("dataDir");
         return dataDir;
     }
     public File getDataLogDir() {
+        ConfigTracker.markParamAsUsed("dataLogDir");
         return dataLogDir;
     }
     public int getTickTime() {
+        ConfigTracker.markParamAsUsed("tickTime");
         return tickTime;
     }
     public int getMaxClientCnxns() {
+        ConfigTracker.markParamAsUsed("maxClientCnxns");
         return maxClientCnxns;
     }
     /** minimum session timeout in milliseconds, -1 if unset */
     public int getMinSessionTimeout() {
+        ConfigTracker.markParamAsUsed("minSessionTimeout");
         return minSessionTimeout;
     }
     /** maximum session timeout in milliseconds, -1 if unset */
     public int getMaxSessionTimeout() {
+        ConfigTracker.markParamAsUsed("maxSessionTimeout");
         return maxSessionTimeout;
     }
 
     public long getJvmPauseInfoThresholdMs() {
+        ConfigTracker.markParamAsUsed("jvmPauseInfoThresholdMs");
         return jvmPauseInfoThresholdMs;
     }
     public long getJvmPauseWarnThresholdMs() {
+        ConfigTracker.markParamAsUsed("jvmPauseWarnThresholdMs");
         return jvmPauseWarnThresholdMs;
     }
     public long getJvmPauseSleepTimeMs() {
+        ConfigTracker.markParamAsUsed("jvmPauseSleepTimeMs");
         return jvmPauseSleepTimeMs;
     }
     public boolean isJvmPauseMonitorToRun() {
+        ConfigTracker.markParamAsUsed("jvmPauseMonitorToRun");
         return jvmPauseMonitorToRun;
     }
     public String getMetricsProviderClassName() {
+        ConfigTracker.markParamAsUsed("metricsProviderClassName");
         return metricsProviderClassName;
     }
     public Properties getMetricsProviderConfiguration() {
+        ConfigTracker.markParamAsUsed("metricsProviderConfiguration");
         return metricsProviderConfiguration;
     }
     /** Maximum number of pending socket connections to read, -1 if unset */
     public int getClientPortListenBacklog() {
+        ConfigTracker.markParamAsUsed("listenBacklog");
         return listenBacklog;
     }
 

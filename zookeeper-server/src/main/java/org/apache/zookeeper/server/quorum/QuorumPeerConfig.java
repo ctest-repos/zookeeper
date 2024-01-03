@@ -37,6 +37,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
+
+import edu.illinois.ConfigTracker;
 import org.apache.yetus.audience.InterfaceAudience;
 import org.apache.zookeeper.common.AtomicFileWritingIdiom;
 import org.apache.zookeeper.common.AtomicFileWritingIdiom.OutputStreamStatement;
@@ -338,9 +340,9 @@ public class QuorumPeerConfig {
             } else if (key.equals("autopurge.purgeInterval")) {
                 purgeInterval = Integer.parseInt(value);
             } else if (key.equals("standaloneEnabled")) {
-                setStandaloneEnabled(parseBoolean(key, value));
+                setStandaloneEnabled2(parseBoolean(key, value));
             } else if (key.equals("reconfigEnabled")) {
-                setReconfigEnabled(parseBoolean(key, value));
+                setReconfigEnabled2(parseBoolean(key, value));
             } else if (key.equals("sslQuorum")) {
                 sslQuorum = parseBoolean(key, value);
             } else if (key.equals("portUnification")) {
@@ -427,6 +429,7 @@ public class QuorumPeerConfig {
             dataLogDir = dataDir;
         }
 
+        ConfigTracker.markParamAsUsed("clientPort");
         if (clientPort == null) {
             LOG.info("clientPort is not set");
             if (clientPortAddress != null) {
@@ -440,6 +443,7 @@ public class QuorumPeerConfig {
             LOG.info("clientPortAddress is {}", formatInetAddr(this.clientPortAddress));
         }
 
+        ConfigTracker.markParamAsUsed("secureClientPort");
         if (secureClientPort == null) {
             LOG.info("secureClientPort is not set");
             if (secureClientPortAddress != null) {
@@ -795,85 +799,110 @@ public class QuorumPeerConfig {
     }
 
     public InetSocketAddress getClientPortAddress() {
+        ConfigTracker.markParamAsUsed("clientPortAddress");
         return clientPortAddress;
     }
     public InetSocketAddress getSecureClientPortAddress() {
+        ConfigTracker.markParamAsUsed("secureClientPortAddress");
         return secureClientPortAddress;
     }
     public int getObserverMasterPort() {
+        ConfigTracker.markParamAsUsed("observerMasterPort");
         return observerMasterPort;
     }
     public File getDataDir() {
+        ConfigTracker.markParamAsUsed("dataDir");
         return dataDir;
     }
     public File getDataLogDir() {
+        ConfigTracker.markParamAsUsed("dataLogDir");
         return dataLogDir;
     }
 
     public String getInitialConfig() {
+        ConfigTracker.markParamAsUsed("initialConfig");
         return initialConfig;
     }
 
     public int getTickTime() {
+        ConfigTracker.markParamAsUsed("tickTime");
         return tickTime;
     }
     public int getMaxClientCnxns() {
+        ConfigTracker.markParamAsUsed("maxClientCnxns");
         return maxClientCnxns;
     }
     public int getMinSessionTimeout() {
+        ConfigTracker.markParamAsUsed("minSessionTimeout");
         return minSessionTimeout;
     }
     public int getMaxSessionTimeout() {
+        ConfigTracker.markParamAsUsed("maxSessionTimeout");
         return maxSessionTimeout;
     }
     public String getMetricsProviderClassName() {
+        ConfigTracker.markParamAsUsed("metricsProviderClassName");
         return metricsProviderClassName;
     }
     public Properties getMetricsProviderConfiguration() {
+        ConfigTracker.markParamAsUsed("metricsProviderConfiguration");
         return metricsProviderConfiguration;
     }
     public boolean areLocalSessionsEnabled() {
+        ConfigTracker.markParamAsUsed("localSessionsEnabled");
         return localSessionsEnabled;
     }
     public boolean isLocalSessionsUpgradingEnabled() {
+        ConfigTracker.markParamAsUsed("localSessionsUpgradingEnabled");
         return localSessionsUpgradingEnabled;
     }
     public boolean isSslQuorum() {
+        ConfigTracker.markParamAsUsed("sslQuorum");
         return sslQuorum;
     }
 
     public boolean shouldUsePortUnification() {
+        ConfigTracker.markParamAsUsed("portUnification");
         return shouldUsePortUnification;
     }
     public int getClientPortListenBacklog() {
+
         return clientPortListenBacklog;
     }
 
     public int getInitLimit() {
+        ConfigTracker.markParamAsUsed("initLimit");
         return initLimit;
     }
     public int getSyncLimit() {
+        ConfigTracker.markParamAsUsed("syncLimit");
         return syncLimit;
     }
     public int getConnectToLearnerMasterLimit() {
+        ConfigTracker.markParamAsUsed("connectToLearnerMasterLimit");
         return connectToLearnerMasterLimit;
     }
     public int getElectionAlg() {
+        ConfigTracker.markParamAsUsed("electionAlg");
         return electionAlg;
     }
     public int getElectionPort() {
+        ConfigTracker.markParamAsUsed("electionPort");
         return electionPort;
     }
 
     public int getSnapRetainCount() {
+        ConfigTracker.markParamAsUsed("snapRetainCount");
         return snapRetainCount;
     }
 
     public int getPurgeInterval() {
+        ConfigTracker.markParamAsUsed("purgeInterval");
         return purgeInterval;
     }
 
     public boolean getSyncEnabled() {
+        ConfigTracker.markParamAsUsed("syncEnabled");
         return syncEnabled;
     }
 
@@ -891,15 +920,19 @@ public class QuorumPeerConfig {
     }
 
     public long getJvmPauseInfoThresholdMs() {
+        ConfigTracker.markParamAsUsed("jvm.pause.info-threshold.ms");
         return jvmPauseInfoThresholdMs;
     }
     public long getJvmPauseWarnThresholdMs() {
+        ConfigTracker.markParamAsUsed("jvm.pause.warn-threshold.ms");
         return jvmPauseWarnThresholdMs;
     }
     public long getJvmPauseSleepTimeMs() {
+        ConfigTracker.markParamAsUsed("jvm.pause.sleep.time.ms");
         return jvmPauseSleepTimeMs;
     }
     public boolean isJvmPauseMonitorToRun() {
+        ConfigTracker.markParamAsUsed("jvm.pause.monitor.enabled");
         return jvmPauseMonitorToRun;
     }
 
@@ -912,6 +945,7 @@ public class QuorumPeerConfig {
     }
 
     public LearnerType getPeerType() {
+        ConfigTracker.markParamAsUsed("peerType");
         return peerType;
     }
 
@@ -920,36 +954,53 @@ public class QuorumPeerConfig {
     }
 
     public Boolean getQuorumListenOnAllIPs() {
+        ConfigTracker.markParamAsUsed("quorumListenOnAllIPs");
         return quorumListenOnAllIPs;
     }
 
     public boolean isMultiAddressEnabled() {
+        ConfigTracker.markParamAsUsed("zookeeper.multiAddress.enabled");
         return multiAddressEnabled;
     }
 
     public boolean isMultiAddressReachabilityCheckEnabled() {
+        ConfigTracker.markParamAsUsed("zookeeper.multiAddress.reachabilityCheckEnabled");
         return multiAddressReachabilityCheckEnabled;
     }
 
     public int getMultiAddressReachabilityCheckTimeoutMs() {
+        ConfigTracker.markParamAsUsed("zookeeper.multiAddress.reachabilityCheckTimeoutMs");
         return multiAddressReachabilityCheckTimeoutMs;
     }
 
     public static boolean isStandaloneEnabled() {
+        ConfigTracker.markParamAsUsed("standaloneEnabled");
         return standaloneEnabled;
     }
 
     public static void setStandaloneEnabled(boolean enabled) {
+        ConfigTracker.markParamAsSet("standaloneEnabled");
+        standaloneEnabled = enabled;
+    }
+
+    public static void setStandaloneEnabled2(boolean enabled) {
         standaloneEnabled = enabled;
     }
 
     public static boolean isReconfigEnabled() {
+        ConfigTracker.markParamAsUsed("reconfigEnabled");
         return reconfigEnabled;
     }
 
     public static void setReconfigEnabled(boolean enabled) {
+        ConfigTracker.markParamAsSet("reconfigEnabled");
         reconfigEnabled = enabled;
     }
+
+    public static void setReconfigEnabled2(boolean enabled) {
+        reconfigEnabled = enabled;
+    }
+
 
     private boolean parseBoolean(String key, String value) throws ConfigException {
         if (value.equalsIgnoreCase("true")) {

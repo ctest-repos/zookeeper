@@ -21,6 +21,8 @@ package org.apache.zookeeper.server.quorum;
 import java.io.IOException;
 import javax.management.JMException;
 import javax.security.sasl.SaslException;
+
+import edu.illinois.ConfigTracker;
 import org.apache.yetus.audience.InterfaceAudience;
 import org.apache.zookeeper.audit.ZKAuditProvider;
 import org.apache.zookeeper.jmx.ManagedUtil;
@@ -203,6 +205,7 @@ public class QuorumPeerMain {
             quorumPeer.setLearnerType(config.getPeerType());
             quorumPeer.setSyncEnabled(config.getSyncEnabled());
             quorumPeer.setQuorumListenOnAllIPs(config.getQuorumListenOnAllIPs());
+            ConfigTracker.markParamAsUsed("sslQuorumReloadCertFiles");
             if (config.sslQuorumReloadCertFiles) {
                 quorumPeer.getX509Util().enableCertFileReloading();
             }
@@ -212,14 +215,21 @@ public class QuorumPeerMain {
 
             // sets quorum sasl authentication configurations
             quorumPeer.setQuorumSaslEnabled(config.quorumEnableSasl);
+            ConfigTracker.markParamAsUsed("quorum.auth.enableSasl");
             if (quorumPeer.isQuorumSaslAuthEnabled()) {
                 quorumPeer.setQuorumServerSaslRequired(config.quorumServerRequireSasl);
+                ConfigTracker.markParamAsUsed("quorum.auth.serverRequireSasl");
                 quorumPeer.setQuorumLearnerSaslRequired(config.quorumLearnerRequireSasl);
+                ConfigTracker.markParamAsUsed("quorum.auth.learnerRequireSasl");
                 quorumPeer.setQuorumServicePrincipal(config.quorumServicePrincipal);
+                ConfigTracker.markParamAsUsed("quorum.auth.kerberos.servicePrincipal");
                 quorumPeer.setQuorumServerLoginContext(config.quorumServerLoginContext);
+                ConfigTracker.markParamAsUsed("quorum.auth.server.saslLoginContext");
                 quorumPeer.setQuorumLearnerLoginContext(config.quorumLearnerLoginContext);
+                ConfigTracker.markParamAsUsed("quorum.auth.learner.saslLoginContext");
             }
             quorumPeer.setQuorumCnxnThreadsSize(config.quorumCnxnThreadsSize);
+            ConfigTracker.markParamAsUsed("quorum.cnxn.threads.size");
             quorumPeer.initialize();
 
             if (config.jvmPauseMonitorToRun) {
