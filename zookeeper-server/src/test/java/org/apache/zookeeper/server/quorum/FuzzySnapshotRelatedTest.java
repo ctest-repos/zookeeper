@@ -31,8 +31,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.security.sasl.SaslException;
 
-import edu.illinois.CTestClass;
-import edu.illinois.CTestJunit5Extension;
 import org.apache.jute.OutputArchive;
 import org.apache.zookeeper.AsyncCallback.MultiCallback;
 import org.apache.zookeeper.CreateMode;
@@ -64,8 +62,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Test cases used to catch corner cases due to fuzzy snapshot.
  */
-@ExtendWith(CTestJunit5Extension.class)
-@CTestClass
 public class FuzzySnapshotRelatedTest extends QuorumPeerTestBase {
 
     private static final Logger LOG = LoggerFactory.getLogger(FuzzySnapshotRelatedTest.class);
